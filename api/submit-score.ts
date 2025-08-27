@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { ethers } from 'ethers';
 import { createPublicClient, http } from 'viem';
 import { defineChain } from 'viem/utils';
-import { GAME_CONTRACT_ABI } from '../src/lib/contract-abi';
+import { GAME_CONTRACT_ABI } from './contract-abi';
 
 // Define Monad testnet chain
 const monadTestnet = defineChain({

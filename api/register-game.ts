@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { ethers } from 'ethers';
-import { GAME_CONTRACT_ABI } from '../src/lib/contract-abi';
+import { GAME_CONTRACT_ABI } from './contract-abi';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS headers
