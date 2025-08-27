@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/*.ts": {
-      "runtime": "@vercel/node@18.x"
+      "runtime": "@vercel/node@5.3.15"
     }
   },
   "buildCommand": "npm run build",
