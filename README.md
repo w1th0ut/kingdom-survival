@@ -1,4 +1,4 @@
-# Kingdom: Survival
+# Kingdom Survival
 
 <div align="center">
   <img src="public/banner.png" alt="Kingdom Survival - Live Into Another World" width="100%" />
@@ -254,7 +254,7 @@ After deployment, register the game on-chain:
 curl -X POST https://your-domain.vercel.app/api/register-game \\
   -H "Content-Type: application/json" \\
   -d '{
-    "name": "Kingdom: Survival",
+    "name": "Kingdom Survival",
     "image": "https://your-domain.vercel.app/icon.png",
     "url": "https://your-domain.vercel.app"
   }'
