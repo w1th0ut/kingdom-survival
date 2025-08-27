@@ -1,0 +1,36 @@
+{
+  "name": "kingdom-survival",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:client\"",
+    "dev:client": "vite",
+    "dev:api": "node dev-server.js",
+    "add-test-data": "node add-test-data.js",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.11",
+    "@types/react-dom": "^19.1.8",
+    "@vitejs/plugin-react": "^4.3.1",
+    "concurrently": "^9.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "typescript": "~5.8.3",
+    "vite": "^7.1.2"
+  },
+  "dependencies": {
+    "@privy-io/react-auth": "^2.22.0",
+    "@vercel/node": "^5.3.15",
+    "ethers": "^6.15.0",
+    "node-fetch": "^3.3.2",
+    "phaser": "^3.90.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-hot-toast": "^2.6.0",
+    "viem": "^2.36.0"
+  }
+}
