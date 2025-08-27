@@ -1,5 +1,9 @@
 # Kingdom: Survival
 
+<div align="center">
+  <img src="public/banner.png" alt="Kingdom Survival - Live Into Another World" width="100%" />
+</div>
+
 A 2D tower defense game built with Phaser 3, React, TypeScript, and Privy Global Wallet integration. Players defend their crystal tower against waves of enemies, earning scores that are submitted on-chain to the Monad Games ID contract.
 
 ## 🎮 Game Features
