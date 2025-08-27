@@ -1,23 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { ethers } from 'ethers';
-import { createPublicClient, http } from 'viem';
-import { defineChain } from 'viem/utils';
 import { GAME_CONTRACT_ABI } from './contract-abi';
-
-// Define Monad testnet chain
-const monadTestnet = defineChain({
-  id: 41454,
-  name: 'Monad Testnet',
-  network: 'monad-testnet',
-  nativeCurrency: { name: 'MON', symbol: 'MON', decimals: 18 },
-  rpcUrls: {
-    default: { http: ['https://testnet-rpc.monad.xyz'] },
-    public: { http: ['https://testnet-rpc.monad.xyz'] },
-  },
-  blockExplorers: {
-    default: { name: 'Monad Explorer', url: 'https://testnet-explorer.monad.xyz' },
-  },
-});
 
 // In-memory storage for demo (use proper database in production)
 const scores: any[] = [];
@@ -36,13 +19,16 @@ interface ScoreSubmission {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  console.log('🔥 API ENDPOINT HIT:', req.method, req.url);
-  console.log('📥 Request body:', JSON.stringify(req.body, null, 2));
+  // Set Content-Type to ensure JSON response
+  res.setHeader('Content-Type', 'application/json');
   
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', process.env.CORS_ORIGIN || '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+  console.log('🔥 API ENDPOINT HIT:', req.method, req.url);
+  console.log('📥 Request body:', JSON.stringify(req.body, null, 2));
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
