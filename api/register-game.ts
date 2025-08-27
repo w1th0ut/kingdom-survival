@@ -1,6 +1,32 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { ethers } from 'ethers';
-import { GAME_CONTRACT_ABI } from './contract-abi';
+
+// Contract ABI embedded directly for registerGame function
+const GAME_REGISTER_ABI = [
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_game", "type": "address" },
+      { "internalType": "string", "name": "_name", "type": "string" },
+      { "internalType": "string", "name": "_image", "type": "string" },
+      { "internalType": "string", "name": "_url", "type": "string" }
+    ],
+    "name": "registerGame",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "games",
+    "outputs": [
+      { "internalType": "address", "name": "game", "type": "address" },
+      { "internalType": "string", "name": "image", "type": "string" },
+      { "internalType": "string", "name": "name", "type": "string" },
+      { "internalType": "string", "name": "url", "type": "string" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+] as const;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS headers
@@ -36,6 +62,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
+    // Import ethers dynamically
+    const { ethers } = await import('ethers');
+
     // Create provider and wallet
     const provider = new ethers.JsonRpcProvider(rpcUrl);
     const wallet = new ethers.Wallet(privateKey, provider);
@@ -44,7 +73,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const gameAddress = wallet.address;
 
     // Create contract instance
-    const contract = new ethers.Contract(contractAddress, GAME_CONTRACT_ABI, wallet);
+    const contract = new ethers.Contract(contractAddress, GAME_REGISTER_ABI, wallet);
 
     console.log('Registering game with address:', gameAddress);
     console.log('Game details:', { name, image, url });
