@@ -4,7 +4,9 @@ import { HomeScene } from '../scenes/HomeScene';
 import { TowerDefenseScene } from '../scenes/TowerDefenseScene';
 import { ResultsScene } from '../scenes/ResultsScene';
 import { LeaderboardScene } from '../scenes/LeaderboardScene';
+import { AuthModal } from './AuthModal';
 import { GAME_CONFIG } from '../lib/game-config';
+import { usePrivy } from '@privy-io/react-auth';
 
 interface GameComponentProps {
   user?: any;
@@ -13,7 +15,9 @@ interface GameComponentProps {
 export function GameComponent({ user }: GameComponentProps) {
   const gameRef = useRef<Phaser.Game | null>(null);
   const [isReady, setIsReady] = React.useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = React.useState(false);
   const homeSceneRef = useRef<HomeScene | null>(null);
+  const { login } = usePrivy();
 
   useEffect(() => {
     // Set ready after a short delay to ensure DOM is ready
@@ -58,6 +62,10 @@ export function GameComponent({ user }: GameComponentProps) {
           if (user) {
             homeScene.updateUser(user);
           }
+          // Set up event listener for authentication modal
+          homeScene.events.on('showAuthModal', () => {
+            setIsAuthModalOpen(true);
+          });
         }
       }, 500);
     }
@@ -78,6 +86,21 @@ export function GameComponent({ user }: GameComponentProps) {
       homeSceneRef.current.updateUser(user);
     }
   }, [user]);
+  
+  // Handle modal actions
+  const handleCloseModal = () => {
+    setIsAuthModalOpen(false);
+  };
+  
+  const handleSignIn = () => {
+    login();
+    setIsAuthModalOpen(false);
+  };
+  
+  const handleRegisterUsername = () => {
+    window.open('https://monad-games-id-site.vercel.app/', '_blank');
+    setIsAuthModalOpen(false);
+  };
 
   return (
     <div className="game-container">
@@ -87,6 +110,14 @@ export function GameComponent({ user }: GameComponentProps) {
           <div className="loading-spinner">Loading...</div>
         </div>
       )}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={handleCloseModal}
+        onSignIn={handleSignIn}
+        onRegisterUsername={handleRegisterUsername}
+        isSignedIn={user !== null}
+        hasUsername={user?.hasUsername || false}
+      />
     </div>
   );
 }

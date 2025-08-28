@@ -30,8 +30,13 @@ export class HomeScene extends Phaser.Scene {
   create() {
     const { width, height } = this.cameras.main;
 
-    // Start main menu music
-    AudioManager.getInstance().playMainMenuMusic(this);
+    // Play main menu music if not already playing
+    const currentMusic = AudioManager.getInstance().getCurrentMusicKey();
+    const isMusicPlaying = AudioManager.getInstance().isMusicPlaying();
+    
+    if (currentMusic !== 'main-menu-music' || !isMusicPlaying) {
+      AudioManager.getInstance().playMainMenuMusic(this);
+    }
 
     // Background using your custom main_menu.png - resize to fit screen
     const background = this.add.image(width / 2, height / 2, 'main_menu');
@@ -102,6 +107,20 @@ export class HomeScene extends Phaser.Scene {
   }
 
   private startGame() {
+    // Validate user authentication and username before starting game
+    if (!this.userData) {
+      // User is not signed in - show modal
+      this.events.emit('showAuthModal');
+      return;
+    }
+    
+    if (!this.userData.hasUsername || !this.userData.username) {
+      // User is signed in but doesn't have username - show modal
+      this.events.emit('showAuthModal');
+      return;
+    }
+    
+    // User is authenticated and has username - proceed with game
     // Generate seed for fairness
     const seed = this.generateSeed();
     
