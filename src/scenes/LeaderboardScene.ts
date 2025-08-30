@@ -90,7 +90,7 @@ export class LeaderboardScene extends Phaser.Scene {
 
     try {
       // Try using AllOrigins proxy to bypass CORS
-      const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://monad-games-id-site.vercel.app/api/leaderboard?page=1&gameId=108&sortBy=scores');
+      const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://monad-games-id-site.vercel.app/api/leaderboard?page=1&gameId=219&sortBy=scores');
       
       const response = await fetch(proxyUrl);
       

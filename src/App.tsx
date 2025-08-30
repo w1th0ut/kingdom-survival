@@ -38,7 +38,7 @@ export function App() {
           </p>
           <div className="footer-links">
             <a 
-              href="https://monad-games-id-site.vercel.app/leaderboard?page=1&gameId=108&sortBy=scores" 
+              href="https://monad-games-id-site.vercel.app/leaderboard?page=1&gameId=219&sortBy=scores" 
               target="_blank" 
               rel="noopener noreferrer"
               className="footer-link"
