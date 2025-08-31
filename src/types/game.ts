@@ -69,6 +69,18 @@ export interface LeaderboardEntry {
   timestamp: number;
 }
 
+export interface Monster {
+  id: string;
+  name: string;
+  description: string;
+  health: number;
+  damage: number;
+  sprite: string;
+  type: 'SMALL' | 'LARGE' | 'BOSS' | 'BOSS_DEVIL' | 'FLYING_DEVIL';
+  imageScale: number;
+  xOffset?: number;
+}
+
 // Phaser scene names
 export const SCENES = {
   BOOT: 'BootScene',
@@ -76,4 +88,5 @@ export const SCENES = {
   GAME: 'GameScene',
   RESULTS: 'ResultsScene',
   LEADERBOARD: 'LeaderboardScene',
+  BESTIARY: 'BestiaryScene',
 } as const;

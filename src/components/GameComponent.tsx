@@ -4,6 +4,7 @@ import { HomeScene } from '../scenes/HomeScene';
 import { TowerDefenseScene } from '../scenes/TowerDefenseScene';
 import { ResultsScene } from '../scenes/ResultsScene';
 import { LeaderboardScene } from '../scenes/LeaderboardScene';
+import { BestiaryScene } from '../scenes/BestiaryScene';
 import { AuthModal } from './AuthModal';
 import { GAME_CONFIG } from '../lib/game-config';
 import { usePrivy } from '@privy-io/react-auth';
@@ -42,7 +43,7 @@ export function GameComponent({ user }: GameComponentProps) {
           debug: false,
         },
       },
-        scene: [HomeScene, TowerDefenseScene, ResultsScene, LeaderboardScene],
+        scene: [HomeScene, TowerDefenseScene, ResultsScene, LeaderboardScene, BestiaryScene],
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,

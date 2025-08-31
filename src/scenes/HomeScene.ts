@@ -7,6 +7,7 @@ export class HomeScene extends Phaser.Scene {
   private userData: any = null;
   private playButton?: Phaser.GameObjects.Image;
   private leaderboardButton?: Phaser.GameObjects.Image;
+  private bestiaryButton?: Phaser.GameObjects.Image;
   private userText?: Phaser.GameObjects.Text;
 
   constructor() {
@@ -78,6 +79,25 @@ export class HomeScene extends Phaser.Scene {
     this.leaderboardButton.on('pointerout', () => {
       this.leaderboardButton!.setScale(1.0); // Reset scale
       this.leaderboardButton!.clearTint();
+    });
+
+    // Bestiary button using custom bestiary button (positioned below leaderboard button)
+    this.bestiaryButton = this.add.image(width / 2, 540, 'bestiary_btn');
+    this.bestiaryButton.setInteractive({ cursor: 'pointer' });
+    this.bestiaryButton.setScale(1.0); // Adjust scale if needed
+
+    this.bestiaryButton.on('pointerdown', () => {
+      this.scene.start(SCENES.BESTIARY, { user: this.userData });
+    });
+
+    this.bestiaryButton.on('pointerover', () => {
+      this.bestiaryButton!.setScale(1.1); // Scale up on hover
+      this.bestiaryButton!.setTint(0xdddddd); // Light tint on hover
+    });
+
+    this.bestiaryButton.on('pointerout', () => {
+      this.bestiaryButton!.setScale(1.0); // Reset scale
+      this.bestiaryButton!.clearTint();
     });
 
     // Listen for user updates from the React layer

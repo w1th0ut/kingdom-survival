@@ -6,6 +6,7 @@ export class AssetLoader {
     scene.load.image('game_background', '/assets/images/backgrounds/game_background.png');
     scene.load.image('main_menu', '/assets/images/backgrounds/main_menu.png');
     scene.load.image('leaderboard_background', '/assets/images/backgrounds/leaderboard_background.png');
+    scene.load.image('bestiary_background', '/assets/images/backgrounds/bestiary_background.png');
 
     // UI Objects
     scene.load.image('fortress', '/assets/images/ui/objects/fortress.png');
@@ -17,6 +18,7 @@ export class AssetLoader {
     scene.load.image('continue_btn', '/assets/images/ui/buttons/continue.png');
     scene.load.image('exit_btn', '/assets/images/ui/buttons/exit.png');
     scene.load.image('leaderboard_btn', '/assets/images/ui/buttons/leaderboard.png');
+    scene.load.image('bestiary_btn', '/assets/images/ui/buttons/bestiary.png');
     scene.load.image('play_btn', '/assets/images/ui/buttons/play.png');
     scene.load.image('retry_btn', '/assets/images/ui/buttons/retry.png');
 

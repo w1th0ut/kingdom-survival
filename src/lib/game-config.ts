@@ -66,7 +66,7 @@ export const GAME_CONFIG = {
   METADATA: {
     name: "Kingdom Survival",
     url: import.meta.env.VITE_VERCEL_URL || "http://localhost:5173",
-    image: "https://picsum.photos/536/354", // Replace with actual game icon
+    image: "https://kingdom-survival.vercel.app/banner.png", // Replace with actual game icon
   },
 } as const;
 

@@ -278,7 +278,8 @@ export class LeaderboardScene extends Phaser.Scene {
 
     // Show total entries count
     const totalText = this.add.text(width / 2, startY + (maxEntries * entryHeight) + -460, 
-      `Showing top ${Math.min(maxEntries, this.leaderboardData.length)} of ${this.leaderboardData.length} players`, {
+      //`Showing top ${Math.min(maxEntries, this.leaderboardData.length)} of ${this.leaderboardData.length} players`, {
+      `Showing top ${Math.min(maxEntries, this.leaderboardData.length)} players`, {
       fontSize: '14px',
       color: '#FFFFFF',
     });
