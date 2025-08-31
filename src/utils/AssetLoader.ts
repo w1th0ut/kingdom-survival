@@ -24,6 +24,7 @@ export class AssetLoader {
     scene.load.image('small_goblin', '/assets/images/enemies/small_goblin.png');
     scene.load.image('big_goblin', '/assets/images/enemies/big_goblin.png');
     scene.load.image('boss_golem', '/assets/images/enemies/boss_golem.png');
+    scene.load.image('boss_devil', '/assets/images/enemies/boss_devil.png');
     scene.load.image('flying_devil', '/assets/images/enemies/flying_devil.png');
 
     // Small Goblin Walk Animation
@@ -61,6 +62,18 @@ export class AssetLoader {
     scene.load.image('golem_attack2', '/assets/images/effects/golem_attack/golem_attack2.png');
     scene.load.image('golem_attack3', '/assets/images/effects/golem_attack/golem_attack3.png');
     scene.load.image('golem_attack4', '/assets/images/effects/golem_attack/golem_attack4.png');
+
+    // Boss Devil Walk Animation
+    scene.load.image('devil_walk1', '/assets/images/effects/devil_walk/devil_walk.png');
+    scene.load.image('devil_walk2', '/assets/images/effects/devil_walk/devil_walk2.png');
+    scene.load.image('devil_walk3', '/assets/images/effects/devil_walk/devil_walk3.png');
+    scene.load.image('devil_walk4', '/assets/images/effects/devil_walk/devil_walk4.png');
+
+    // Boss Devil Attack Animation
+    scene.load.image('devil_attack1', '/assets/images/effects/devil_attack/devil_attack.png');
+    scene.load.image('devil_attack2', '/assets/images/effects/devil_attack/devil_attack2.png');
+    scene.load.image('devil_attack3', '/assets/images/effects/devil_attack/devil_attack3.png');
+    scene.load.image('devil_attack4', '/assets/images/effects/devil_attack/devil_attack4.png');
 
     // Flying Devil Fly Animation
     scene.load.image('flying_devil_fly1', '/assets/images/effects/flying_devil_fly/flying_devil.png');
@@ -160,6 +173,32 @@ export class AssetLoader {
       repeat: -1
     });
 
+    // Boss Devil Walking Animation (mirrored to left)
+    scene.anims.create({
+      key: 'devil_walking',
+      frames: [
+        { key: 'devil_walk1' },
+        { key: 'devil_walk2' },
+        { key: 'devil_walk3' },
+        { key: 'devil_walk4' }
+      ],
+      frameRate: 6,
+      repeat: -1
+    });
+
+    // Boss Devil Attack Animation (mirrored to left)
+    scene.anims.create({
+      key: 'devil_attacking',
+      frames: [
+        { key: 'devil_attack1' },
+        { key: 'devil_attack2' },
+        { key: 'devil_attack3' },
+        { key: 'devil_attack4' }
+      ],
+      frameRate: 5,
+      repeat: -1
+    });
+
     // Flying Devil Fly Animation (mirrored to left)
     scene.anims.create({
       key: 'flying_devil_flying',
@@ -230,8 +269,15 @@ export class AssetLoader {
       hitboxOffsetX: 0, // Offset X koordinat hitbox dari center sprite (pixel)
       hitboxOffsetY: -5, // Offset Y koordinat hitbox dari center sprite (sedikit ke atas)
     },
+    BOSS_DEVIL: {
+      scale: 0.7,
+      groundOffset: 150, // Ketinggian dari ground level untuk boss devil
+      hitboxRadius: 100, // Radius hitbox untuk collision detection
+      hitboxOffsetX: 0, // Offset X koordinat hitbox dari center sprite (pixel)
+      hitboxOffsetY: -5, // Offset Y koordinat hitbox dari center sprite (sedikit ke atas)
+    },
     FLYING_DEVIL: {
-      scale: 1,  // Diperbesar dari 0.25 menjadi 0.35
+      scale: 1,
       groundOffset: 400, // Terbang tinggi di udara, jauh dari ground
       hitboxRadius: 60, // Diperbesar hitbox dari 50 menjadi 60
       hitboxOffsetX: 0, // Offset X koordinat hitbox dari center sprite (pixel)

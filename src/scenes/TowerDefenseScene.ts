@@ -19,6 +19,7 @@ export class TowerDefenseScene extends Phaser.Scene {
     SMALL: { width: 48, height: 48, health: 4, sprite: 'small_goblin', walkAnim: 'small_goblin_walking', attackAnim: 'small_goblin_attacking', score: 10 },
     LARGE: { width: 64, height: 64, health: 10, sprite: 'big_goblin', walkAnim: 'big_goblin_walking', attackAnim: 'big_goblin_attacking', score: 25 },
     BOSS: { width: 96, height: 96, health: 50, sprite: 'boss_golem', walkAnim: 'golem_walking', attackAnim: 'golem_attacking', score: 100 },
+    BOSS_DEVIL: { width: 96, height: 96, health: 50, sprite: 'boss_devil', walkAnim: 'devil_walking', attackAnim: 'devil_attacking', score: 100 },
     FLYING_DEVIL: { width: 56, height: 56, health: 6, sprite: 'flying_devil', walkAnim: 'flying_devil_flying', attackAnim: 'flying_devil_attacking', score: 15 }
   };
   
@@ -790,6 +791,11 @@ export class TowerDefenseScene extends Phaser.Scene {
   private showBossAlert(waveNumber: number, onComplete: () => void) {
     const { width, height } = this.cameras.main;
     
+    // Determine boss type based on wave number
+    const isDevilBoss = waveNumber % 2 === 0;
+    const bossName = isDevilBoss ? 'DEVIL BOSS' : 'GOLEM BOSS';
+    const bossColor = isDevilBoss ? '#ff0080' : '#800080';
+    
     // Dark screen overlay
     const alertOverlay = this.add.rectangle(width / 2, height / 2, width, height, 0x000000, 0.7);
     
@@ -803,10 +809,10 @@ export class TowerDefenseScene extends Phaser.Scene {
     });
     warningText.setOrigin(0.5);
     
-    // Boss incoming text
-    const bossText = this.add.text(width / 2, height / 2 - 20, `BOSS INCOMING`, {
+    // Boss incoming text with boss name
+    const bossText = this.add.text(width / 2, height / 2 - 20, `${bossName} INCOMING`, {
       fontSize: '32px',
-      color: '#ffff00',
+      color: bossColor,
       fontStyle: 'bold',
       stroke: '#000000',
       strokeThickness: 3
@@ -823,8 +829,12 @@ export class TowerDefenseScene extends Phaser.Scene {
     });
     waveText.setOrigin(0.5);
     
-    // Boss stats
-    const statsText = this.add.text(width / 2, height / 2 + 60, 'HP: 50 | Damage: High | Reward: 100 Points', {
+    // Boss stats - different descriptions for each boss type
+    const bossDescription = isDevilBoss 
+      ? 'HP: 50 | Fire Damage | Speed: Fast | Reward: 100 Points'
+      : 'HP: 50 | Earth Damage | Speed: Slow | Reward: 100 Points';
+    
+    const statsText = this.add.text(width / 2, height / 2 + 60, bossDescription, {
       fontSize: '18px',
       color: '#cccccc',
       fontStyle: 'bold',
@@ -861,26 +871,37 @@ export class TowerDefenseScene extends Phaser.Scene {
     if (this.gameEnded) return;
     
     const { width } = this.cameras.main;
-    const bossType = this.enemyTypes.BOSS;
+    
+    // Alternate between BOSS (golem) and BOSS_DEVIL based on wave number
+    // Wave 1 = Golem, Wave 2 = Devil, Wave 3 = Golem, etc.
+    const isDevilBoss = waveNumber % 2 === 0;
+    const bossType = isDevilBoss ? this.enemyTypes.BOSS_DEVIL : this.enemyTypes.BOSS;
+    const bossTypeKey = isDevilBoss ? 'BOSS_DEVIL' : 'BOSS';
     
     // Calculate proper ground position for boss using config
-    const bossY = AssetLoader.getEnemyGroundY(this, 'BOSS');
+    const bossY = AssetLoader.getEnemyGroundY(this, bossTypeKey);
     
     // Create boss sprite
     const boss = this.add.sprite(width + 50, bossY, bossType.sprite);
     
     // Set scale using AssetLoader config
-    const bossScale = AssetLoader.getEnemyScale('BOSS');
+    const bossScale = AssetLoader.getEnemyScale(bossTypeKey);
     boss.setScale(bossScale);
-    boss.setFlipX(true); // Mirror to face left
+    
+    // Only mirror golem boss, keep devil boss in original form
+    if (!isDevilBoss) {
+      boss.setFlipX(true); // Mirror golem to face left
+    }
+    // Devil boss stays in original form (not mirrored)
     
     // Add boss properties
     (boss as any).maxHealth = bossType.health;
     (boss as any).currentHealth = bossType.health;
     (boss as any).enemyType = bossType;
-    (boss as any).enemyTypeKey = 'BOSS'; // Store type key for hitbox calculation
+    (boss as any).enemyTypeKey = bossTypeKey; // Store type key for hitbox calculation
     (boss as any).isAttached = false;
     (boss as any).isBoss = true;
+    (boss as any).isDevilBoss = isDevilBoss; // Store boss type for effects
     
     // Add to enemies array and set as current boss
     this.enemies.push(boss);
